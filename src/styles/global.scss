@@ -1,0 +1,21 @@
+:root{
+  --backgorund: #f8f8f8;
+  --color-font: #29292e;
+  --purple: #835afd;
+  --gray: #a8a8b3;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background: var(--backgorund);
+  color: var(--color-font);
+}
+
+body, input, button, textarea{
+  font: 400 16px 'Roboto', sans-serif;
+}
