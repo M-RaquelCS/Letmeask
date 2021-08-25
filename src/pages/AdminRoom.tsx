@@ -45,6 +45,7 @@ export function AdminRoom(){
       isAnswered:true,
     });
   }
+  
   async function handleHighlightQuestion(questionId: string){
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isHighlighted:true,
