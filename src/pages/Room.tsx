@@ -63,6 +63,12 @@ export function Room(){
 
   }
 
+  async function handleLogin(){
+    if(!user){
+      await signInWithGoogle()
+    }
+  }
+
   return(
     <div id="page-room">
       <header>
@@ -90,7 +96,7 @@ export function Room(){
                 <span>{user.name}</span>
               </div>
             ) : (
-              <span>Para enviar uma pergunta,<button onClick={signInWithGoogle}>faça seu login</button>.</span>
+              <span>Para enviar uma pergunta,<button onClick={handleLogin}>faça seu login</button>.</span>
             ) }
             <Button type="submit" disabled={!user}>Enviar pergunta</Button>
           </div>
