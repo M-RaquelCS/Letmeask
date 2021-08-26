@@ -1,3 +1,5 @@
+// código de criação de sala, simplifincando o modo para usarmos no resto do código que a sala tera e funcionara da maneira desse código
+
 import { useEffect, useState } from "react";
 import { database } from "../services/firebase";
 import { useAuth } from "./useAuth";

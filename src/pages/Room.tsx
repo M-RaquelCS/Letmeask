@@ -1,3 +1,4 @@
+// sala da visão do telespectador
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -24,7 +25,7 @@ export function Room(){
   
   const roomId = params.id;
   const {questions, title} = useRoom(roomId);
-
+  // função de enviar pergunta, ela não pode estar vazia e o usuário deve existir, ou seja deve efetuar login, se entrar na sala sem login pode fazer o login de dentro da sala
   async function handleSendQuestion(event: FormEvent){
     event.preventDefault();
     if(newQuestion.trim() === ''){
@@ -33,7 +34,7 @@ export function Room(){
     if(!user){
       throw new Error('You must be logged in')
     }
-
+    // montando o que contem na questão
     const question = {
       content: newQuestion,
       author:{
@@ -43,12 +44,12 @@ export function Room(){
       isHighlighted: false,
       isAnswered: false
     };
-
+    //enviando a pergunta para o banco de dados
     await database.ref(`rooms/${roomId}/questions`).push(question);
 
     setNewQuestion('');
   }
-
+  // função de curtir a questão, em que cada like gerará um id para ter o controle de retirar o like caso preciso
   async function handleLikeQuestion(questionId: string, likeId: string | undefined){
     
     if(likeId){
@@ -62,7 +63,7 @@ export function Room(){
     }
 
   }
-
+  // função de efetuar o login já dentro da sala
   async function handleLogin(){
     if(!user){
       await signInWithGoogle()

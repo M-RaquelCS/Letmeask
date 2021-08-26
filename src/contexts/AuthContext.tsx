@@ -1,7 +1,9 @@
+// código de autenticação do usuário com o firebase
 import { createContext, ReactNode, useState, useEffect } from "react";
 
 import { auth, firebase } from '../services/firebase';
 
+//tipagem das classes ultilizadas
 type User = {
   id: string;
   name: string;
@@ -18,7 +20,7 @@ type AuthContextProps = {
 }
 
 export const AuthContext = createContext({} as AuthContextType);
-
+// função de verificar se o usuário existe
 export function AuthContextProvider(props: AuthContextProps){
   const [user, setUser] = useState<User>();
   useEffect(() => {
@@ -41,7 +43,7 @@ export function AuthContextProvider(props: AuthContextProps){
       unsubscribe();
     }
   }, [])
-
+  // função de criação de um popup para efetuar o login com o google
   async function signInWithGoogle(){
     const provider = new firebase.auth.GoogleAuthProvider();
 

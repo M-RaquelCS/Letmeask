@@ -1,3 +1,4 @@
+// criação da página inicial do site
 import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 
@@ -18,24 +19,25 @@ export function Home(){
   const history = useHistory();
   const { user ,signInWithGoogle } = useAuth();
   const [roomCode, setRoomCode] = useState('');
-
+  // função de criar a sala
   async function handleCreateRoom(){
-    if(!user){
+    if(!user){ // verificar se existe um usuário, se não existe ele ira abrir  popup de login
       await signInWithGoogle()
     }
 
-    history.push('/rooms/new');
+    history.push('/rooms/new'); // ao criar a sala ele será redirecionado para a página da visão do administrador
   }
-
+  // função de entrar em uma sala já criada
   async function handleJoinRoom(event: FormEvent){
     event.preventDefault();
-
+    // verificar se o código digitado não é vazio
     if(roomCode.trim() === ''){
       return;
     }
-
+    // se o código for o certo comparando ao banco de dados ele entrará na sala na visão do telespectador
+  
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
-
+    // verificar se o código digitado é válido, se o código estiver errado ou se a sala já foi encerrada cairá nessas condições
     if(!roomRef.exists()){
       alert('Room doesn`t exists.');
       return;
@@ -45,7 +47,7 @@ export function Home(){
       return;
     }
 
-    history.push(`/rooms/${roomCode}`)
+    history.push(`/rooms/${roomCode}`) // redirecionamento para a sala na visão do telespectador
   }
 
   return(

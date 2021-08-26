@@ -1,3 +1,4 @@
+// criação da sala
 import { FormEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 
@@ -17,20 +18,21 @@ export function NewRoom(){
   const { user } = useAuth()
   const history = useHistory()
   const [newRoom, setNewRoom] = useState('');
-
+  // função que rodará ao cliclar no botão 'criar sala'
   async function handleCreateRoom(event: FormEvent){
     event.preventDefault();
-
+    // verificação de que o nome da sala está preenchido se não, nao criara a sala 
     if(newRoom.trim()===''){
       return;
     }
-
+    // mandando a sala criada junto ao seu nome, id do criador e id da sala que foi criada naquele instante
     const roomRef = database.ref('rooms');
 
     const firebaseRoom = await roomRef.push({
       title: newRoom,
       authorId: user?.id,
     })
+    // redirecionamento para a sala criada na visão do administrador
     history.push(`/admin/rooms/${firebaseRoom.key}`)
   }
 

@@ -1,3 +1,4 @@
+// sala do administrador, aberta ao criar a sala
 import { useHistory, useParams } from 'react-router-dom';
 
 //import { useAuth } from '../hooks/useAuth';
@@ -26,26 +27,26 @@ export function AdminRoom(){
   
   const roomId = params.id;
   const {questions, title} = useRoom(roomId);
-
+  // função para encerrar sala ao terminar de usar
   async function handleRemoveRoom(){
     await database.ref(`rooms/${roomId}`).update({
-      endedAt: new Date(),
+      endedAt: new Date(), //será adicionado nos dados da sala a data e a hora do encerramento da mesma, a sala que tiver essa data nos dados não irá abrir mais
     })
     history.push('/');
   }
-
+  // função de deletar a perguntar pelo id gerado pelo banco de dados
   async function handleDeleteQuestion(questionId: string){
     if(window.confirm('Tem certeza que você deseja excluir esta pergunta?')){
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
     }
   }
-
+  // função de dar um check na pergnta, ou seja finalizar a mesma
   async function handleCheckQuestionAsAnswer(questionId: string){
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isAnswered:true,
     });
   }
-  
+  //função de destacar a mesma para informar ao usuário que aquela pergunta está sendo respondida  
   async function handleHighlightQuestion(questionId: string){
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isHighlighted:true,
